@@ -59,7 +59,7 @@ ram.runtime = "110M"
         autoupdate.strategy = "latest_github_tag"
 
     [resources.nodejs]
-    version = "11.4.2"
+    version = "22.17"
     [resources.system_user]
 
     [resources.install_dir]
