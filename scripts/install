@@ -41,9 +41,15 @@ ynh_script_progression --message="Installing Node.js packages ..." --weight=45
 
 pushd "$install_dir"
 	ynh_use_nodejs
-	ynh_exec_warn_less ynh_exec_as $app $ynh_node_load_PATH $ynh_npm install ./
-	ynh_exec_warn_less ynh_exec_as $app $ynh_node_load_PATH $ynh_npm rebuild ./
+# 	ynh_exec_warn_less ynh_exec_as $app $ynh_node_load_PATH $ynh_npm install ./
+# 	ynh_exec_warn_less ynh_exec_as $app $ynh_node_load_PATH $ynh_npm rebuild ./
+# popd
+	ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" pnpm install --frozen-lockfile
+	ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" NODE_ENV=production pnpm build
+	ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" pnpm run init
 popd
+
+ynh_secure_remove --file="$install_dir/.cache"
 
 #=================================================
 # SYSTEM CONFIGURATION
